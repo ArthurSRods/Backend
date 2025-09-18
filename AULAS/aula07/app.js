@@ -1,20 +1,32 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false}));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+const tarefas = [];
+
+app.get('/tarefas', (req, res) => {
+    res.json(tarefas);
+})
+
+app.post('/tarefas', (req, res) =>{
+    const novaTarefa = {
+        id: tarefas.length + 1,
+        nome: req.body.nome,
+        concluida: false
+    };
+    tarefas.push(novaTarefa);
+    res.status(201).json(novaTarefa);
+    
+    res.status(201).json({id: 1, nome: "Estudar para P1", concluida: false});
+});
 
 module.exports = app;
