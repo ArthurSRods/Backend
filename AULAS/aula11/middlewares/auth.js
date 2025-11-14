@@ -1,4 +1,10 @@
 const jwt = require("jsonwebtoken");
+const bcryptjs = require("bcryptjs");
+
+function cifrarSenha(password){
+  const salto = bcryptjs.genSaltSync(10);
+  return bcryptjs.hashSync(password, salto);
+}
 
 function gerarToken(payload) {
   try {
@@ -22,4 +28,4 @@ function verificarToken(req, res, next) {
   }
 }
 
-module.exports = { gerarToken, verificarToken };
+module.exports = { gerarToken, verificarToken, cifrarSenha };

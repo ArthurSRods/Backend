@@ -1,5 +1,6 @@
 const express = require('express');
 const { gerarToken, verificarToken } = require("../middlewares/auth");
+const Usuario = require("../models/userModel");
 const router = express.Router();
 
 /* GET users listing. */
